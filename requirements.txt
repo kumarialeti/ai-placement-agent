@@ -1,0 +1,45 @@
+# Core Framework
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.18
+
+# LangChain & LLM
+langchain==0.3.14
+langchain-openai==0.3.0
+langchain-community==0.3.14
+langchain-core==0.3.29
+langgraph==0.2.60
+
+# Vector Database (FAISS — pre-built wheels, no C++ tools needed)
+faiss-cpu==1.9.0.post1
+numpy>=1.26.0
+
+# Embeddings & NLP
+tiktoken==0.8.0
+
+# PDF Processing
+PyMuPDF==1.25.3
+
+# Database
+sqlalchemy[asyncio]==2.0.36
+aiosqlite==0.20.0
+
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# Validation & Settings
+pydantic==2.10.4
+pydantic-settings==2.7.1
+
+# HTTP
+httpx==0.28.1
+aiofiles==24.1.0
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.25.0
+
+# Utilities
+python-dotenv==1.0.1
+rich==13.9.4
