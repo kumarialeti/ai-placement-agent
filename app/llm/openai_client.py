@@ -54,8 +54,14 @@ def get_structured_llm(output_schema, temperature: float = 0.3):
     return primary_llm.with_fallbacks([fallback_llm])
 
 
+_embeddings = None
+
 def get_embeddings() -> HuggingFaceEmbeddings:
-    """Get HuggingFace embeddings model."""
-    return HuggingFaceEmbeddings(
-        model_name=settings.EMBEDDING_MODEL,
-    )
+    """Get HuggingFace embeddings model (cached)."""
+    global _embeddings
+    if _embeddings is None:
+        logger.info("Initializing HuggingFaceEmbeddings (this may take a few seconds)...")
+        _embeddings = HuggingFaceEmbeddings(
+            model_name=settings.EMBEDDING_MODEL,
+        )
+    return _embeddings
