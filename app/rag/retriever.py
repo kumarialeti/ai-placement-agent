@@ -22,7 +22,12 @@ def retrieve(
 
     Returns list of dicts with 'text', 'metadata', and 'score' keys.
     """
-    k = top_k or settings.TOP_K_RESULTS
+    # Check if the FAISS index is empty first to avoid running the slow PyTorch model
+    from app.rag.vector_store import get_collection_stats
+    stats = get_collection_stats(collection_name)
+    if stats.get("count", 0) == 0:
+        logger.info("FAISS index is empty — skipping embedding generation for query")
+        return []
 
     # Generate query embedding
     query_vector = embed_query(query)
