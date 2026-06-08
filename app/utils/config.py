@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     # LLM & Embeddings Configuration
     GROQ_API_KEY: str
     GROQ_MODEL: str = "llama-3.3-70b-versatile"
-    EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
+    EMBEDDING_MODEL: str = "app/resources/all-MiniLM-L6-v2"
 
     # JWT Auth
     JWT_SECRET_KEY: str = "change-this-to-a-secure-secret-key"
