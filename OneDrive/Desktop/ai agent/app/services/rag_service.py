@@ -88,7 +88,7 @@ async def search_documents(
     top_k: int = 5,
 ) -> dict:
     """Search the knowledge base."""
-    track_rag_search(user_id, query)
+    await track_rag_search(user_id, query)
 
     results = retrieve(query=query, top_k=top_k, category=category)
 

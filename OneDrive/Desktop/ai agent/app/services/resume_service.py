@@ -8,6 +8,7 @@ import uuid
 import aiofiles
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.analytics.tracker import track_resume_uploaded
 from app.database.crud import create_resume, update_resume_analysis
 from app.rag.loader import load_pdf
 from app.tools.resume_parser_tool import parse_resume
@@ -60,6 +61,8 @@ async def upload_and_analyze_resume(
     )
 
     logger.info(f"Resume analyzed — ATS Score: {analysis['ats_score']}")
+
+    await track_resume_uploaded(user_id, analysis["ats_score"])
 
     return {
         "resume_id": resume.id,

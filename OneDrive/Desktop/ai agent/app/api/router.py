@@ -4,7 +4,7 @@ Main API router aggregating all route modules.
 
 from fastapi import APIRouter
 
-from app.api.routes import chat, interview, jobs, resume, roadmap, recruiter, voice
+from app.api.routes import chat, interview, jobs, resume, roadmap, recruiter, voice, analytics
 from app.auth.auth_routes import router as auth_router
 
 api_router = APIRouter(prefix="/api/v1")
@@ -18,3 +18,4 @@ api_router.include_router(interview.router)
 api_router.include_router(roadmap.router)
 api_router.include_router(recruiter.router)
 api_router.include_router(voice.router)
+api_router.include_router(analytics.router)

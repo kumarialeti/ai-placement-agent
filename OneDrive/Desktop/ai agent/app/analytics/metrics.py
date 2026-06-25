@@ -10,22 +10,22 @@ from app.utils.logger import get_logger
 logger = get_logger(__name__)
 
 
-def get_user_metrics(user_id: int) -> dict:
+async def get_user_metrics(user_id: int) -> dict:
     """Calculate aggregate metrics for a user."""
-    all_events = get_events(user_id)
+    all_events = await get_events(user_id)
 
     # Count by type
     event_counts = Counter(e["type"] for e in all_events)
 
     # Score history
-    evaluations = get_events(user_id, "answer_evaluated")
+    evaluations = await get_events(user_id, "answer_evaluated")
     score_history = [
         {"topic": e["data"]["topic"], "score": e["data"]["score"], "timestamp": e["timestamp"]}
         for e in evaluations
     ]
 
     # Topic coverage
-    questions = get_events(user_id, "question_asked")
+    questions = await get_events(user_id, "question_asked")
     topics_covered = list(set(e["data"]["topic"] for e in questions))
 
     # Average score by topic

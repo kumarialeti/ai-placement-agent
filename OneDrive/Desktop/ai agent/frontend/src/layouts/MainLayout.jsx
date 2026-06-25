@@ -19,8 +19,9 @@ export default function MainLayout({ userProfile, onLogout }) {
     { path: '/', icon: Home, label: 'Dashboard' },
     { path: '/interview', icon: Video, label: 'Video Interview' },
     { path: '/chat', icon: MessageSquare, label: 'AI Prep Agent' },
-    { path: '/onboarding', icon: LayoutDashboard, label: 'My Resume' },
     { path: '/roadmap', icon: Target, label: 'Study Roadmap' },
+    { path: '/jobs', icon: LayoutDashboard, label: 'Job Matches' },
+    { path: '/recruiter', icon: Search, label: 'Recruiter View' },
   ];
 
   return (

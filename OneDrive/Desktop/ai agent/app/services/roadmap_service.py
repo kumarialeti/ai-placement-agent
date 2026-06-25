@@ -25,7 +25,7 @@ async def create_roadmap(
         weak_areas=areas,
     )
 
-    track_roadmap_generated(user_id, target_role)
+    await track_roadmap_generated(user_id, target_role)
 
     logger.info(f"Generated {duration_weeks}-week roadmap for {target_role}")
     return result

@@ -5,12 +5,21 @@ import { Link } from 'react-router-dom';
 
 export default function DashboardPage() {
   const [profile, setProfile] = useState(null);
+  const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getProfile()
-      .then(data => { setProfile(data); setLoading(false); })
-      .catch(err => { console.error(err); setLoading(false); });
+    Promise.all([
+      getProfile().catch(err => console.error("Profile Error", err)),
+      import('../services/api.js').then(api => api.getAnalyticsMetrics()).catch(err => {
+        console.error("Analytics Error", err);
+        return null;
+      })
+    ]).then(([profileData, analyticsData]) => {
+      if (profileData) setProfile(profileData);
+      if (analyticsData) setAnalytics(analyticsData);
+      setLoading(false);
+    });
   }, []);
 
   if (loading) {
@@ -25,10 +34,10 @@ export default function DashboardPage() {
   }
 
   const stats = [
-    { label: 'Resumes Analyzed', value: '3', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50' },
-    { label: 'Mock Interviews', value: '2', icon: Briefcase, color: 'text-yellow-600', bg: 'bg-yellow-50' },
-    { label: 'Avg ATS Score', value: '78%', icon: Target, color: 'text-indigo-600', bg: 'bg-indigo-50' },
-    { label: 'Days Active', value: '14', icon: Calendar, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+    { label: 'Mock Interviews', value: analytics?.total_evaluations || '0', icon: Briefcase, color: 'text-yellow-600', bg: 'bg-yellow-50' },
+    { label: 'Avg Interview Score', value: `${analytics?.overall_avg || 0}/10`, icon: Target, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+    { label: 'Total Questions', value: analytics?.total_questions || '0', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50' },
+    { label: 'Knowledge Searches', value: analytics?.total_searches || '0', icon: Calendar, color: 'text-emerald-600', bg: 'bg-emerald-50' },
   ];
 
   return (
@@ -85,26 +94,26 @@ export default function DashboardPage() {
           </div>
           <div className="p-6">
             <div className="space-y-6">
-              {[
-                { title: 'Mock Interview: React.js', time: '2 hours ago', status: 'Completed', score: '85/100' },
-                { title: 'Resume ATS Analysis', time: 'Yesterday', status: 'Reviewed', score: '72%' },
-                { title: 'DSA Practice Session', time: '3 days ago', status: 'Completed', score: '90/100' },
-              ].map((activity, i) => (
-                <div key={i} className="flex items-center justify-between group cursor-pointer">
-                  <div className="flex items-center gap-4">
-                    <div className="w-2 h-2 rounded-full bg-blue-500 mt-1"></div>
-                    <div>
-                      <h4 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">{activity.title}</h4>
-                      <p className="text-sm text-slate-500">{activity.time}</p>
+              {analytics?.score_history?.length > 0 ? (
+                analytics.score_history.slice().reverse().map((activity, i) => (
+                  <div key={i} className="flex items-center justify-between group cursor-pointer">
+                    <div className="flex items-center gap-4">
+                      <div className="w-2 h-2 rounded-full bg-blue-500 mt-1"></div>
+                      <div>
+                        <h4 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">Interview: {activity.topic}</h4>
+                        <p className="text-sm text-slate-500">{new Date(activity.timestamp).toLocaleString()}</p>
+                      </div>
+                    </div>
+                    <div className="text-right hidden sm:block">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
+                        {activity.score}/10
+                      </span>
                     </div>
                   </div>
-                  <div className="text-right hidden sm:block">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
-                      {activity.score}
-                    </span>
-                  </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className="text-slate-500 text-sm">No recent activity yet. Start a mock interview!</p>
+              )}
             </div>
           </div>
         </div>

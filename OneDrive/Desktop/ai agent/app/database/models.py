@@ -144,3 +144,17 @@ class Document(Base):
     category = Column(String(100), nullable=False)  # dsa, ml, interview, aptitude
     chunk_count = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class AnalyticsEvent(Base):
+    """Event tracking for analytics."""
+
+    __tablename__ = "analytics_events"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    event_type = Column(String(100), nullable=False, index=True)
+    event_data = Column(Text, nullable=True)  # JSON string
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User", backref="analytics_events")

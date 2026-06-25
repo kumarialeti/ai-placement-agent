@@ -188,3 +188,10 @@ export async function transcribeAudio(audioBlob) {
   });
   return handleResponse(res);
 }
+
+// ─── Analytics ───
+export async function getAnalyticsMetrics() {
+  const res = await fetch(`${API_BASE}/analytics/metrics`, { headers: getHeaders() });
+  return handleResponse(res);
+}
+

@@ -62,7 +62,7 @@ async def start_mock_interview(
     _session_questions[session.id] = questions
 
     # Track
-    track_question_asked(user_id, topic, difficulty)
+    await track_question_asked(user_id, topic, difficulty)
 
     return {
         "session_id": session.id,
@@ -141,7 +141,7 @@ async def submit_answer(
     )
 
     # Track
-    track_answer_evaluated(user_id, question_data.get("difficulty", "general"), evaluation.overall_score)
+    await track_answer_evaluated(user_id, question_data.get("difficulty", "general"), evaluation.overall_score)
 
     next_question_data = None
     if evaluation.next_question:
