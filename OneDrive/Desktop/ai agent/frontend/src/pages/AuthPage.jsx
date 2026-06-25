@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { login, register } from '../services/api.js';
 import { User, Lock, Eye, EyeOff } from 'lucide-react';
 
-export default function AuthPage({ setIsAuthenticated }) {
+export default function AuthPage({ onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -22,14 +22,12 @@ export default function AuthPage({ setIsAuthenticated }) {
     try {
       if (isLogin) {
         const data = await login(email, password);
-        localStorage.setItem('token', data.access_token);
-        setIsAuthenticated(true);
+        onLogin(data.access_token, data.user);
         navigate('/');
       } else {
         await register(email, username, password, fullName);
         const data = await login(email, password);
-        localStorage.setItem('token', data.access_token);
-        setIsAuthenticated(true);
+        onLogin(data.access_token, data.user);
         navigate('/onboarding');
       }
     } catch (err) {

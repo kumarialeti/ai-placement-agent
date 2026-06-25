@@ -13,7 +13,9 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
+import os
 
 from app.api.router import api_router
 from app.database.connection import close_db, init_db
@@ -86,9 +88,9 @@ app.add_middleware(
 app.include_router(api_router)
 
 
-# Health check
-@app.get("/", tags=["Health"])
-async def root():
+# Health check (use a specific prefix if needed, but here we can just keep /health)
+@app.get("/api/health", tags=["Health"])
+async def root_health():
     return {
         "name": settings.APP_NAME,
         "version": settings.APP_VERSION,
@@ -110,3 +112,19 @@ async def global_exception_handler(request, exc):
         status_code=500,
         content={"detail": "Internal server error. Please try again."},
     )
+
+
+# Serve static assets
+if os.path.isdir("frontend/dist/assets"):
+    app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="assets")
+
+# Catch-all route to serve SPA
+@app.get("/{full_path:path}", include_in_schema=False)
+async def serve_frontend(full_path: str):
+    dist_path = os.path.join("frontend", "dist", full_path)
+    if os.path.isfile(dist_path):
+        return FileResponse(dist_path)
+    index_path = os.path.join("frontend", "dist", "index.html")
+    if os.path.isfile(index_path):
+        return FileResponse(index_path)
+    return JSONResponse(status_code=404, content={"detail": "Not Found"})

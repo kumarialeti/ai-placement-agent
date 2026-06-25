@@ -2,15 +2,17 @@ import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, MessageSquare, LayoutDashboard, Target, LogOut, Bell, Search, Menu, X, Video } from 'lucide-react';
 import { useState } from 'react';
 
-export default function MainLayout({ setIsAuthenticated }) {
+export default function MainLayout({ userProfile, onLogout }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setIsAuthenticated(false);
-    navigate('/login');
+    localStorage.removeItem('userProfile');
+    localStorage.removeItem('user');
+    onLogout();
+    navigate('/auth');
   };
 
   const navItems = [
