@@ -4,7 +4,7 @@ import AuthPage from './pages/AuthPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
 import OnboardingPage from './pages/OnboardingPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
-import InterviewPage from './pages/InterviewPage.jsx';
+import MockInterview from './components/MockInterview.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
 
 function App() {
@@ -74,7 +74,7 @@ function App() {
         >
           <Route index element={<DashboardPage userProfile={userProfile} />} />
           <Route path="chat" element={<ChatPage user={user} userProfile={userProfile} onLogout={handleLogout} />} />
-          <Route path="interview" element={<InterviewPage />} />
+          <Route path="interview" element={<MockInterview />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>

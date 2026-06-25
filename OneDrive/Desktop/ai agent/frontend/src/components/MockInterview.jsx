@@ -327,13 +327,33 @@ export default function MockInterview() {
           boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
         }}>
           {hasCamera ? (
-            <video 
-              ref={videoRef} 
-              autoPlay 
-              muted 
-              playsInline 
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
+            <>
+              <video 
+                ref={videoRef} 
+                autoPlay 
+                muted 
+                playsInline 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              {/* AI Avatar Overlay when speaking */}
+              {isSpeaking && (
+                <div style={{
+                  position: 'absolute', top: '20px', right: '20px',
+                  width: '80px', height: '100px',
+                  background: '#1e293b', borderRadius: '12px',
+                  border: '2px solid #6366f1', boxShadow: '0 0 15px rgba(99, 102, 241, 0.5)',
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                  zIndex: 10
+                }}>
+                  <div style={{ fontSize: '2rem' }}>🤖</div>
+                  <div style={{ display: 'flex', gap: '4px', marginTop: '8px', height: '10px', alignItems: 'flex-end' }}>
+                    <span className="equalizer-bar" style={{ animationDelay: '0.1s', width: '3px', background: '#818cf8', borderRadius: '2px' }} />
+                    <span className="equalizer-bar" style={{ animationDelay: '0.3s', width: '3px', background: '#818cf8', borderRadius: '2px' }} />
+                    <span className="equalizer-bar" style={{ animationDelay: '0.2s', width: '3px', background: '#818cf8', borderRadius: '2px' }} />
+                  </div>
+                </div>
+              )}
+            </>
           ) : (
             <div style={{ textAlign: 'center', padding: '2rem' }}>
               <div style={{ fontSize: '3rem', animation: 'pulse 1.5s infinite' }}>🤖</div>
