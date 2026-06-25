@@ -39,6 +39,15 @@ export async function getProfile() {
   return handleResponse(res);
 }
 
+export async function updateProfile(targetRole, experienceLevel) {
+  const res = await fetch(`${API_BASE}/auth/profile`, {
+    method: 'PATCH',
+    headers: getHeaders(),
+    body: JSON.stringify({ target_role: targetRole, experience_level: experienceLevel }),
+  });
+  return handleResponse(res);
+}
+
 // ─── Chat ───
 export async function sendMessageStream(message, sessionId = null, onChunk, onDone, onError) {
   try {
@@ -118,6 +127,19 @@ export async function matchJD(jobDescription) {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ job_description: jobDescription }),
+  });
+  return handleResponse(res);
+}
+
+export async function generateCoverLetter(jobDescription, companyName, jobTitle) {
+  const res = await fetch(`${API_BASE}/jobs/cover-letter`, {
+    method: 'POST',
+    headers: getHeaders(),
+    body: JSON.stringify({ 
+      job_description: jobDescription,
+      company_name: companyName,
+      job_title: jobTitle
+    }),
   });
   return handleResponse(res);
 }

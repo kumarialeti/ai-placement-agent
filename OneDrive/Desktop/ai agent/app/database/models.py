@@ -37,6 +37,9 @@ class User(Base):
     user_profile = relationship(
         "UserProfile", back_populates="user", uselist=False, cascade="all, delete-orphan"
     )
+    analytics_events = relationship(
+        "AnalyticsEvent", back_populates="user", cascade="all, delete-orphan"
+    )
 
 
 class Resume(Base):
@@ -157,4 +160,4 @@ class AnalyticsEvent(Base):
     event_data = Column(Text, nullable=True)  # JSON string
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    user = relationship("User", backref="analytics_events")
+    user = relationship("User", back_populates="analytics_events")

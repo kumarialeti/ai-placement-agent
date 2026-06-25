@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { uploadResume } from '../services/api';
+import { uploadResume, updateProfile } from '../services/api';
 
 function OnboardingPage({ onComplete }) {
   const [file, setFile] = useState(null);
@@ -54,6 +54,8 @@ function OnboardingPage({ onComplete }) {
 
     try {
       const response = await uploadResume(file);
+      await updateProfile(targetRole, experienceLevel);
+      
       onComplete({
         resumeId: response.id,
         targetRole,

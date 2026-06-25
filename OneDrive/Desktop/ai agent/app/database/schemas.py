@@ -38,6 +38,14 @@ class TokenResponse(BaseModel):
     user: UserResponse
 
 
+class UserProfileUpdate(BaseModel):
+    target_role: str | None = None
+    experience_level: str | None = None
+    known_skills: list[str] | None = None
+    weak_areas: list[str] | None = None
+    strong_areas: list[str] | None = None
+
+
 # ─── Resume Schemas ───
 
 
