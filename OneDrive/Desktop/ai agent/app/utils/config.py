@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     APP_NAME: str = "AI Placement Preparation Agent"
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = True
-    CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000"
+    CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000,https://ai-placement-agent-prjt.onrender.com"
 
     # Uploads
     UPLOAD_DIR: str = "./data/uploads"
