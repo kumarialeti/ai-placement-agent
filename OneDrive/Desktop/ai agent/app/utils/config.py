@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     APP_NAME: str = "AI Placement Preparation Agent"
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = True
-    CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000,https://ai-placement-agent-prjt.onrender.com"
+    CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000,http://localhost:8000,https://ai-placement-agent-prjt.onrender.com,https://ai-placement-agent-bakend.onrender.com"
 
     # Uploads
     UPLOAD_DIR: str = "./data/uploads"
@@ -44,7 +44,22 @@ class Settings(BaseSettings):
 
     @property
     def cors_origins_list(self) -> list[str]:
-        return [origin.strip() for origin in self.CORS_ORIGINS.split(",")]
+        # Always include production URLs + any additional from env var
+        required_origins = [
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "http://localhost:8000",
+            "https://ai-placement-agent-prjt.onrender.com",
+            "https://ai-placement-agent-bakend.onrender.com",
+        ]
+        env_origins = [
+            origin.strip()
+            for origin in self.CORS_ORIGINS.split(",")
+            if origin.strip()  # filter empty strings
+        ]
+        # Merge both lists, deduplicate while preserving order
+        all_origins = list(dict.fromkeys(env_origins + required_origins))
+        return all_origins
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
