@@ -38,6 +38,13 @@ function OnboardingPage({ onComplete }) {
     }
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('userProfile');
+    window.location.href = '/auth';
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file) {
@@ -63,16 +70,27 @@ function OnboardingPage({ onComplete }) {
         isSetup: true
       });
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to upload and analyze resume. Please try again.');
+      setError(err.message || 'Failed to upload and analyze resume. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center p-6 bg-slate-50 min-h-[calc(100vh-8rem)]">
+    <div className="flex-1 flex items-center justify-center p-6 bg-slate-50 min-h-screen">
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 w-full max-w-lg">
-        
+
+        {/* Header with prominent Sign Out */}
+        <div className="flex items-center justify-between mb-6">
+          <span className="text-sm text-slate-400">Setup your profile</span>
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg transition-all"
+          >
+            <span>🚪</span> Sign Out
+          </button>
+        </div>
+
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mb-4 text-3xl">
             🚀
@@ -82,8 +100,18 @@ function OnboardingPage({ onComplete }) {
         </div>
 
         {error && (
-          <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm border border-red-100 mb-6 flex items-center gap-2">
-             <span className="font-semibold">Error:</span> {error}
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+            <p className="text-red-700 text-sm font-medium mb-1">⚠️ Upload Failed</p>
+            <p className="text-red-600 text-sm">{error}</p>
+            <div className="mt-3 pt-3 border-t border-red-200">
+              <p className="text-xs text-red-500 mb-2">If the problem persists, try signing out and logging in again.</p>
+              <button
+                onClick={handleSignOut}
+                className="text-xs font-semibold text-red-600 hover:text-red-800 underline"
+              >
+                Sign out and go to Login →
+              </button>
+            </div>
           </div>
         )}
 
