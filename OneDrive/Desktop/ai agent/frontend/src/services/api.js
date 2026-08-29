@@ -13,11 +13,15 @@ async function handleResponse(res) {
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
     if (res.status === 401) {
+      // Clear stale session data
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       localStorage.removeItem('userProfile');
-      window.location.href = '/auth';
-      return;
+      // Throw first so callers can show a proper message, then redirect
+      const err = new Error('SESSION_EXPIRED');
+      err.status = 401;
+      setTimeout(() => { window.location.href = '/auth'; }, 1500);
+      throw err;
     }
     throw new Error(data.detail || 'Request failed');
   }

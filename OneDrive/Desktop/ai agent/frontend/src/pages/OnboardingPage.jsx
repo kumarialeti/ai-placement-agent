@@ -70,7 +70,11 @@ function OnboardingPage({ onComplete }) {
         isSetup: true
       });
     } catch (err) {
-      setError(err.message || 'Failed to upload and analyze resume. Please try again.');
+      if (err.message === 'SESSION_EXPIRED' || err.status === 401) {
+        setError('⚠️ Your session has expired. Redirecting to sign in... Please register or log in again.');
+      } else {
+        setError(err.message || 'Failed to upload and analyze resume. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
