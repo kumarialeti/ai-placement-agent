@@ -10,7 +10,8 @@ from app.utils.logger import get_logger
 logger = get_logger(__name__)
 settings = get_settings()
 
-db_url = settings.DATABASE_URL
+db_url = settings.DATABASE_URL.strip().strip("'").strip('"')
+
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql+asyncpg://", 1)
 elif db_url.startswith("postgresql://") and not db_url.startswith("postgresql+asyncpg://"):
