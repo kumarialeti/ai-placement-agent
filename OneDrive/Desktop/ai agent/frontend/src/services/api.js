@@ -10,8 +10,17 @@ function getHeaders() {
 }
 
 async function handleResponse(res) {
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.detail || 'Request failed');
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('userProfile');
+      window.location.href = '/auth';
+      return;
+    }
+    throw new Error(data.detail || 'Request failed');
+  }
   return data;
 }
 
@@ -108,9 +117,15 @@ export async function uploadResume(file) {
   const token = localStorage.getItem('token');
   const formData = new FormData();
   formData.append('file', file);
+  
+  const headers = {};
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   const res = await fetch(`${API_BASE}/resume/upload`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${token}` },
+    headers,
     body: formData,
   });
   return handleResponse(res);
@@ -203,9 +218,14 @@ export async function transcribeAudio(audioBlob) {
   const formData = new FormData();
   formData.append('file', audioBlob, 'recording.webm');
   
+  const headers = {};
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   const res = await fetch(`${API_BASE}/voice/transcribe`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${token}` },
+    headers,
     body: formData,
   });
   return handleResponse(res);

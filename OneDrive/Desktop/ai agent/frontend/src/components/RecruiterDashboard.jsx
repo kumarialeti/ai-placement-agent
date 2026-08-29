@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getRecruiterSessions } from '../services/api.js';
 
 export default function RecruiterDashboard() {
@@ -11,7 +11,7 @@ export default function RecruiterDashboard() {
   // Simulated playback state
   const [isPlayingClip, setIsPlayingClip] = useState(false);
   const [playbackTime, setPlaybackTime] = useState(0);
-  const playbackIntervalRef = useState(null);
+  const playbackIntervalRef = useRef(null);
 
   useEffect(() => {
     loadSessions();

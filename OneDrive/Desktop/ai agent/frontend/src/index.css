@@ -6,20 +6,48 @@
   }
 }
 
-/* Custom Scrollbar for a cleaner look */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* ── Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(12px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 rounded-full;
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-400;
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out both;
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.2s ease-out both;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { @apply bg-slate-200 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-slate-300; }
+
+/* ── Focus ring ── */
+*:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-1;
+}
+
+/* ── Prose overrides for chat ── */
+.prose pre {
+  @apply bg-slate-900 text-slate-100 rounded-lg text-sm;
+}
+.prose code {
+  @apply bg-slate-100 text-slate-800 px-1 py-0.5 rounded text-sm;
+}
+.prose-invert code {
+  @apply bg-blue-700/40 text-white;
 }
