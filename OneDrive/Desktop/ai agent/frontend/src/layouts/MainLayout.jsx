@@ -39,7 +39,7 @@ export default function MainLayout({ user, userProfile, onLogout }) {
   const targetRole = userProfile?.targetRole || '';
 
   return (
-    <div className="flex h-screen bg-slate-50">
+    <div className="flex h-screen bg-surface-muted">
 
       {/* ── Mobile Menu Toggle ── */}
       <div className="lg:hidden fixed top-4 left-4 z-50">
@@ -62,9 +62,9 @@ export default function MainLayout({ user, userProfile, onLogout }) {
         `}
       >
         {/* Logo */}
-        <div className="p-6 border-b border-slate-100">
+        <div className="p-6 border-b border-surface-border">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm">
+            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center shadow-subtle">
               <span className="text-white text-sm font-bold">P</span>
             </div>
             <div>
@@ -87,14 +87,14 @@ export default function MainLayout({ user, userProfile, onLogout }) {
                 className={`
                   flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all
                   ${isActive
-                    ? 'bg-blue-50 text-blue-700'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    ? 'bg-primary-50 text-primary-700'
+                    : 'text-text-muted hover:bg-surface-muted hover:text-text-main'
                   }
                 `}
               >
                 <Icon
                   size={18}
-                  className={isActive ? 'text-blue-600' : 'text-slate-400'}
+                  className={isActive ? 'text-primary-600' : 'text-slate-400'}
                 />
                 {item.label}
               </Link>
@@ -103,10 +103,10 @@ export default function MainLayout({ user, userProfile, onLogout }) {
         </nav>
 
         {/* User + Logout */}
-        <div className="p-3 border-t border-slate-100 space-y-1">
+        <div className="p-3 border-t border-surface-border space-y-1">
           {/* User info */}
-          <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50">
-            <div className="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-sm shrink-0">
+          <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-muted">
+            <div className="w-8 h-8 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center font-bold text-sm shrink-0">
               {initials}
             </div>
             <div className="min-w-0">
@@ -138,7 +138,7 @@ export default function MainLayout({ user, userProfile, onLogout }) {
       <div className="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
 
         {/* Top Header */}
-        <header className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-6 shrink-0">
+        <header className="h-14 bg-surface border-b border-surface-border flex items-center justify-between px-4 lg:px-6 shrink-0 shadow-subtle">
           {/* Left spacer for mobile hamburger */}
           <div className="w-8 lg:hidden" />
 
@@ -152,7 +152,7 @@ export default function MainLayout({ user, userProfile, onLogout }) {
           {/* Right: user chip */}
           <div className="flex items-center gap-3 ml-auto">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-sm border border-blue-200">
+              <div className="w-8 h-8 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center font-bold text-sm border border-primary-100">
                 {initials}
               </div>
               <div className="hidden sm:block">
@@ -166,7 +166,7 @@ export default function MainLayout({ user, userProfile, onLogout }) {
         </header>
 
         {/* Scrollable page content */}
-        <main className="flex-1 overflow-y-auto p-4 lg:p-6 bg-slate-50">
+        <main className="flex-1 overflow-y-auto p-4 lg:p-6 bg-surface-muted">
           <div className="max-w-6xl mx-auto h-full">
             <Outlet />
           </div>

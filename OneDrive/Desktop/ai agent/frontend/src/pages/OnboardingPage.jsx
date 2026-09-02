@@ -81,12 +81,12 @@ function OnboardingPage({ onComplete }) {
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center p-6 bg-slate-50 min-h-screen">
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 w-full max-w-lg">
+    <div className="flex-1 flex items-center justify-center p-6 bg-surface-muted min-h-screen">
+      <div className="bg-surface p-8 rounded-2xl shadow-subtle border border-surface-border w-full max-w-lg">
 
         {/* Header with prominent Sign Out */}
         <div className="flex items-center justify-between mb-6">
-          <span className="text-sm text-slate-400">Setup your profile</span>
+          <span className="text-sm text-text-muted">Setup your profile</span>
           <button
             onClick={handleSignOut}
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg transition-all"
@@ -96,11 +96,11 @@ function OnboardingPage({ onComplete }) {
         </div>
 
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mb-4 text-3xl">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 text-primary-600 rounded-full mb-4 text-3xl">
             🚀
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">Welcome Aboard!</h1>
-          <p className="text-slate-500">Let's set up your profile for personalized interview prep.</p>
+          <h1 className="text-2xl font-bold text-text-main mb-2">Welcome Aboard!</h1>
+          <p className="text-text-muted">Let's set up your profile for personalized interview prep.</p>
         </div>
 
         {error && (
@@ -122,26 +122,26 @@ function OnboardingPage({ onComplete }) {
         <form onSubmit={handleSubmit} className="space-y-6">
           
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700 pl-1">Upload Resume (PDF)</label>
+            <label className="text-sm font-medium text-text-main pl-1">Upload Resume (PDF)</label>
             <div 
               className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${
-                dragActive ? 'border-blue-500 bg-blue-50' : 'border-slate-300 bg-slate-50 hover:border-blue-400'
+                dragActive ? 'border-primary-500 bg-primary-50' : 'border-surface-border bg-surface-muted hover:border-primary-400'
               }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
               onClick={handleFileClick}
             >
-              <div className="text-4xl mb-3 text-slate-400">📄</div>
+              <div className="text-4xl mb-3 text-text-muted">📄</div>
               {file ? (
                 <div>
-                  <p className="font-semibold text-blue-600">{file.name}</p>
-                  <p className="text-xs text-slate-500 mt-1">Click or drag to replace</p>
+                  <p className="font-semibold text-primary-600">{file.name}</p>
+                  <p className="text-xs text-text-muted mt-1">Click or drag to replace</p>
                 </div>
               ) : (
                 <div>
-                  <p className="font-medium text-slate-700">Click to browse or drag PDF here</p>
-                  <p className="text-xs text-slate-500 mt-2">Maximum file size: 5MB</p>
+                  <p className="font-medium text-text-main">Click to browse or drag PDF here</p>
+                  <p className="text-xs text-text-muted mt-2">Maximum file size: 5MB</p>
                 </div>
               )}
             </div>
@@ -155,10 +155,10 @@ function OnboardingPage({ onComplete }) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700 pl-1">Target Job Role</label>
+            <label className="text-sm font-medium text-text-main pl-1">Target Job Role</label>
             <input 
               type="text" 
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all text-slate-900" 
+              className="w-full px-4 py-3 rounded-xl bg-surface border border-surface-border focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-surface-muted transition-all text-text-main" 
               placeholder="e.g., AI Engineer, Frontend Developer" 
               value={targetRole}
               onChange={(e) => setTargetRole(e.target.value)}
@@ -167,9 +167,9 @@ function OnboardingPage({ onComplete }) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700 pl-1">Experience Level</label>
+            <label className="text-sm font-medium text-text-main pl-1">Experience Level</label>
             <select 
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all text-slate-900" 
+              className="w-full px-4 py-3 rounded-xl bg-surface border border-surface-border focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-surface-muted transition-all text-text-main" 
               value={experienceLevel}
               onChange={(e) => setExperienceLevel(e.target.value)}
             >
@@ -183,7 +183,7 @@ function OnboardingPage({ onComplete }) {
           <button 
             type="submit" 
             disabled={loading} 
-            className="w-full py-3.5 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-subtle flex items-center justify-center gap-2"
           >
             {loading ? (
               <>

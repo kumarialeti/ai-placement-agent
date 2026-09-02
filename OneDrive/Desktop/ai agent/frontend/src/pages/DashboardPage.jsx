@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 // ── Skeleton card ──
 function StatSkeleton() {
   return (
-    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm animate-pulse">
+    <div className="bg-surface p-6 rounded-2xl border border-surface-border shadow-subtle animate-pulse">
       <div className="flex justify-between items-start">
         <div className="space-y-2">
-          <div className="h-3 w-24 bg-slate-100 rounded" />
-          <div className="h-8 w-16 bg-slate-100 rounded" />
+          <div className="h-3 w-24 bg-surface-muted rounded" />
+          <div className="h-8 w-16 bg-surface-muted rounded" />
         </div>
-        <div className="w-12 h-12 bg-slate-100 rounded-xl" />
+        <div className="w-12 h-12 bg-surface-muted rounded-xl" />
       </div>
     </div>
   );
@@ -88,12 +88,12 @@ export default function DashboardPage({ userProfile }) {
     <div className="space-y-6 animate-fade-in pb-8">
 
       {/* Header */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="bg-surface rounded-2xl p-6 border border-surface-border shadow-subtle flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">
+          <h1 className="text-2xl font-bold text-text-main">
             Welcome back{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}! 👋
           </h1>
-          <p className="text-slate-500 text-sm mt-1">
+          <p className="text-text-muted text-sm mt-1">
             {userProfile?.targetRole
               ? `Preparing for ${userProfile.targetRole} · ${userProfile.experienceLevel} level`
               : 'Start practicing to track your progress.'}
@@ -101,7 +101,7 @@ export default function DashboardPage({ userProfile }) {
         </div>
         <Link
           to="/chat"
-          className="px-5 py-2.5 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-sm text-sm whitespace-nowrap"
+          className="px-5 py-2.5 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-colors shadow-subtle text-sm whitespace-nowrap"
         >
           Start Practice →
         </Link>
@@ -128,12 +128,12 @@ export default function DashboardPage({ userProfile }) {
               return (
                 <div
                   key={i}
-                  className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-surface p-5 rounded-2xl border border-surface-border shadow-subtle hover:shadow-float transition-shadow"
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-xs font-medium text-slate-500 mb-1">{stat.label}</p>
-                      <h3 className="text-2xl font-bold text-slate-900">{stat.value}</h3>
+                      <p className="text-xs font-medium text-text-muted mb-1">{stat.label}</p>
+                      <h3 className="text-2xl font-bold text-text-main">{stat.value}</h3>
                     </div>
                     <div className={`p-2.5 rounded-xl ${stat.bg} ${stat.color}`}>
                       <Icon size={20} />
@@ -217,31 +217,31 @@ export default function DashboardPage({ userProfile }) {
         </div>
 
         {/* Next Steps */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-          <div className="p-5 border-b border-slate-100">
-            <h2 className="text-base font-bold text-slate-900">Recommended Next Steps</h2>
+        <div className="bg-surface rounded-2xl border border-surface-border shadow-subtle overflow-hidden flex flex-col">
+          <div className="p-5 border-b border-surface-border">
+            <h2 className="text-base font-bold text-text-main">Recommended Next Steps</h2>
           </div>
           <div className="p-4 flex-1 flex flex-col gap-2">
             {nextSteps.map((item, i) => (
               <Link
                 key={i}
                 to={item.link}
-                className="flex items-center justify-between p-3.5 rounded-xl border border-slate-100 bg-slate-50 hover:border-blue-200 hover:bg-blue-50 transition-all group"
+                className="flex items-center justify-between p-3.5 rounded-xl border border-surface-border bg-surface-muted hover:border-primary-100 hover:bg-primary-50 transition-all group"
               >
                 <div>
-                  <span className="text-sm font-semibold text-slate-700 group-hover:text-blue-700 block">
+                  <span className="text-sm font-semibold text-text-main group-hover:text-primary-700 block">
                     {item.text}
                   </span>
-                  <span className="text-xs text-slate-400">{item.desc}</span>
+                  <span className="text-xs text-text-muted">{item.desc}</span>
                 </div>
-                <ChevronRight size={16} className="text-slate-300 group-hover:text-blue-500 shrink-0" />
+                <ChevronRight size={16} className="text-primary-100 group-hover:text-primary-500 shrink-0" />
               </Link>
             ))}
 
             <div className="mt-auto pt-4">
-              <div className="p-4 rounded-xl bg-blue-600 text-white">
+              <div className="p-4 rounded-xl bg-primary-600 text-white">
                 <h4 className="font-bold text-sm mb-1">Pro Tip</h4>
-                <p className="text-xs text-blue-100 leading-relaxed">
+                <p className="text-xs text-primary-100 leading-relaxed">
                   Use the AI Prep Agent chat for realistic mock interviews — it knows your resume.
                 </p>
               </div>

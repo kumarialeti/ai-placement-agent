@@ -10,20 +10,44 @@ function getHeaders() {
 }
 
 async function handleResponse(res) {
-  const data = await res.json().catch(() => ({}));
+  let data = {};
+  try {
+    data = await res.json();
+  } catch (e) {
+    // Response might not be JSON (e.g. 502 Bad Gateway HTML)
+  }
+
   if (!res.ok) {
-    if (res.status === 401) {
-      // Clear stale session data
+    const errorBody = data.error || {};
+    const message = errorBody.message || data.detail || 'An unexpected error occurred';
+    const status = res.status;
+
+    if (status === 401) {
+      // Clear stale session data safely
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       localStorage.removeItem('userProfile');
-      // Throw first so callers can show a proper message, then redirect
-      const err = new Error('SESSION_EXPIRED');
-      err.status = 401;
-      setTimeout(() => { window.location.href = '/auth'; }, 1500);
+      
+      // Prevent infinite redirect loops if already on auth page
+      if (window.location.pathname !== '/auth') {
+        const err = new Error('Session expired. Please log in again.');
+        err.status = 401;
+        setTimeout(() => { window.location.href = '/auth'; }, 500);
+        throw err;
+      }
+    }
+    
+    // Provide generic messages for server errors to prevent leaking stack traces
+    if (status >= 500) {
+      const err = new Error('The server encountered an issue. Please try again later.');
+      err.status = status;
       throw err;
     }
-    throw new Error(data.detail || 'Request failed');
+    
+    const err = new Error(message);
+    err.status = status;
+    err.details = errorBody.details || null;
+    throw err;
   }
   return data;
 }

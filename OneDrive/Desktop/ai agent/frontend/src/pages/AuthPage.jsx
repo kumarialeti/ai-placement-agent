@@ -38,151 +38,166 @@ export default function AuthPage({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-slate-50">
+    <div className="min-h-screen flex flex-col md:flex-row bg-surface-muted">
       
       {/* Left Side / Brand Panel */}
-      <div className="w-full md:w-1/2 bg-indigo-500 flex flex-col justify-center items-center p-8 md:p-16 relative overflow-hidden rounded-b-3xl md:rounded-b-none md:rounded-r-[3rem] shadow-2xl z-10">
+      <div className="hidden md:flex w-full md:w-1/2 bg-primary-900 flex-col justify-center items-start p-12 lg:p-24 relative overflow-hidden">
+        {/* Subtle background patterns */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
         
-        {/* Simple decorative circle */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] aspect-square bg-indigo-400/20 rounded-full blur-3xl"></div>
-
-        <div className="relative z-10 w-full max-w-md text-white text-center md:text-left">
-          <button className="text-white/80 hover:text-white mb-10 flex items-center gap-1 font-medium transition-colors">
-            <span className="text-xl">{'<'}</span> Back
-          </button>
-
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-12">
-            Empower Your Employment Journey
-          </h1>
-
-          {/* Illustration Placeholder (mimicking the screenshot) */}
-          <div className="relative w-full max-w-sm mx-auto aspect-square bg-indigo-400/20 rounded-full flex items-center justify-center p-8 border border-white/10">
-             <div className="text-8xl">🚀</div>
-             {/* Decorative small elements */}
-             <div className="absolute top-10 right-10 w-4 h-4 bg-yellow-400 rounded-sm transform rotate-12"></div>
-             <div className="absolute bottom-20 left-10 w-6 h-2 bg-emerald-400 rounded-full"></div>
+        <div className="relative z-10 w-full max-w-lg text-white">
+          <div className="flex items-center gap-3 mb-16">
+            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-primary-900 text-xl font-bold">P</span>
+            </div>
+            <span className="text-2xl font-bold tracking-tight">PrepAI</span>
           </div>
+
+          <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6 text-white">
+            Nail your next interview with AI.
+          </h1>
+          <p className="text-primary-100 text-lg max-w-md leading-relaxed">
+            Get personalized mock interviews, ATS resume scoring, and AI-driven study roadmaps to land your dream job faster.
+          </p>
         </div>
       </div>
 
       {/* Right Side / Form Panel */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-8 md:p-16 bg-slate-50">
+      <div className="w-full md:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-24 bg-surface relative">
         <div className="w-full max-w-md">
           
-          {/* Mock Logos matching the reference structure */}
-          <div className="flex items-center justify-center gap-4 mb-16">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-indigo-600">🎯 PrepAI</span>
+          <div className="md:hidden flex items-center gap-3 mb-12">
+            <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-subtle">
+              <span className="text-white text-xl font-bold">P</span>
             </div>
-            <div className="h-10 w-px bg-slate-300"></div>
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 border-2 border-orange-500 rounded-full flex items-center justify-center text-orange-500 font-bold text-xl">A</div>
-              <span className="font-bold text-orange-600 leading-tight">ADITYA<br/>UNIVERSITY</span>
-            </div>
+            <span className="text-2xl font-bold text-text-main">PrepAI</span>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="mb-10">
+            <h2 className="text-3xl font-bold text-text-main mb-2">
+              {isLogin ? 'Welcome back' : 'Create an account'}
+            </h2>
+            <p className="text-text-muted">
+              {isLogin ? 'Enter your details to access your dashboard.' : 'Start your prep journey for free.'}
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-center gap-2 border border-red-100">
-                <span className="font-semibold">Error:</span> {error}
+              <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm flex items-start gap-3 border border-red-100 animate-fade-in">
+                <span className="font-semibold shrink-0">Error:</span> 
+                <span className="leading-tight">{error}</span>
               </div>
             )}
 
             {!isLogin && (
-              <>
-                <div className="relative border-b-2 border-indigo-600/30 focus-within:border-indigo-600 transition-colors pb-1">
-                  <div className="absolute left-0 bottom-2 text-indigo-600">
-                    <User size={20} />
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-text-main mb-1.5">Full Name</label>
+                  <div className="relative">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
+                      <User size={18} />
+                    </div>
+                    <input
+                      type="text"
+                      required
+                      className="w-full bg-surface-muted border border-surface-border rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all text-text-main placeholder:text-slate-400"
+                      placeholder="John Doe"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                    />
                   </div>
-                  <input
-                    type="text"
-                    required
-                    className="w-full bg-transparent border-none pl-8 pr-4 py-2 focus:outline-none text-slate-900 placeholder:text-slate-900/60"
-                    placeholder="Full Name*"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                  />
                 </div>
-                <div className="relative border-b-2 border-indigo-600/30 focus-within:border-indigo-600 transition-colors pb-1">
-                  <div className="absolute left-0 bottom-2 text-indigo-600">
-                    <User size={20} />
+                <div>
+                  <label className="block text-sm font-medium text-text-main mb-1.5">Username</label>
+                  <div className="relative">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
+                      <User size={18} />
+                    </div>
+                    <input
+                      type="text"
+                      required
+                      className="w-full bg-surface-muted border border-surface-border rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all text-text-main placeholder:text-slate-400"
+                      placeholder="johndoe123"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
                   </div>
-                  <input
-                    type="text"
-                    required
-                    className="w-full bg-transparent border-none pl-8 pr-4 py-2 focus:outline-none text-slate-900 placeholder:text-slate-900/60"
-                    placeholder="Username*"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
                 </div>
-              </>
+              </div>
             )}
 
-            {/* Material Style Underline Input */}
-            <div className="relative border-b-2 border-indigo-600/30 focus-within:border-indigo-600 transition-colors pb-1">
-              <div className="absolute left-0 bottom-2 text-indigo-600">
-                <User size={20} />
+            <div>
+              <label className="block text-sm font-medium text-text-main mb-1.5">Email address</label>
+              <div className="relative">
+                <input
+                  type="email"
+                  required
+                  className="w-full bg-surface border border-surface-border rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all text-text-main placeholder:text-slate-400"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
-              <input
-                type="email"
-                required
-                className="w-full bg-transparent border-none pl-8 pr-4 py-2 focus:outline-none text-slate-900 placeholder:text-slate-900/60"
-                placeholder="Email id*"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
             </div>
 
-            {/* Password Input */}
-            <div className="relative border-b-2 border-indigo-600/30 focus-within:border-indigo-600 transition-colors pb-1">
-              <div className="absolute left-0 bottom-2 text-indigo-600">
-                <Lock size={20} />
+            <div>
+              <label className="block text-sm font-medium text-text-main mb-1.5">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  className="w-full bg-surface border border-surface-border rounded-xl pl-4 pr-11 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all text-text-main placeholder:text-slate-400"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button 
+                  type="button" 
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-main transition-colors"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
-              <input
-                type={showPassword ? "text" : "password"}
-                required
-                className="w-full bg-transparent border-none pl-8 pr-10 py-2 focus:outline-none text-slate-900 placeholder:text-slate-900/60"
-                placeholder="Password*"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button 
-                type="button" 
-                className="absolute right-0 bottom-2 text-indigo-600 hover:text-indigo-800 transition-colors"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-              </button>
             </div>
 
             {isLogin && (
-              <div className="flex justify-end pt-2">
-                <button type="button" className="text-indigo-600 text-sm hover:underline">
-                  Forgot Password?
+              <div className="flex justify-between items-center pt-1">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" className="rounded border-surface-border text-primary-600 focus:ring-primary-500 w-4 h-4" />
+                  <span className="text-sm text-text-muted">Remember me</span>
+                </label>
+                <button type="button" className="text-primary-600 font-medium text-sm hover:text-primary-700">
+                  Forgot password?
                 </button>
               </div>
             )}
 
-            <div className="pt-6 flex flex-col items-center gap-6">
+            <div className="pt-4">
               <button
                 type="submit"
                 disabled={loading}
-                className="w-48 py-3 rounded-lg bg-indigo-500 text-white font-medium hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-indigo-500/20"
+                className="w-full py-2.5 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-subtle flex justify-center items-center"
               >
-                {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
+                {loading ? (
+                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                ) : (
+                  isLogin ? 'Sign in' : 'Create account'
+                )}
               </button>
-              
-              <div className="text-sm text-slate-500">
-                {isLogin ? "Don't have an account? " : "Already have an account? "}
-                <button
-                  type="button"
-                  onClick={() => { setIsLogin(!isLogin); setError(''); }}
-                  className="text-indigo-600 font-semibold hover:underline"
-                >
-                  {isLogin ? 'Register' : 'Sign in'}
-                </button>
-              </div>
+            </div>
+            
+            <div className="text-center text-sm text-text-muted pt-4">
+              {isLogin ? "Don't have an account? " : "Already have an account? "}
+              <button
+                type="button"
+                onClick={() => { setIsLogin(!isLogin); setError(''); }}
+                className="text-primary-600 font-semibold hover:text-primary-700 transition-colors"
+              >
+                {isLogin ? 'Sign up' : 'Sign in'}
+              </button>
             </div>
 
           </form>

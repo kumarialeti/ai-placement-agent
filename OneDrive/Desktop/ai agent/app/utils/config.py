@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL: str = "app/resources/all-MiniLM-L6-v2"
 
     # JWT Auth
-    JWT_SECRET_KEY: str = "change-this-to-a-secure-secret-key"
+    JWT_SECRET_KEY: str
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440  # 24 hours
 
